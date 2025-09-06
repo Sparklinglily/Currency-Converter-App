@@ -1,4 +1,4 @@
-# Currency Converter
+# Currency Converter App
 
 A clean and simple currency converter app built with Flutter, following Clean Architecture principles and MVVM pattern.
 
@@ -28,7 +28,7 @@ lib/
 │   ├── errors/          # Error handling
 │   └── utils/           # Extensions & utilities
 ├── data/
-│   ├── models/          # Data models (API mapping)
+│   ├── models/          # Data models
 │   ├── repositories/    # Repository implementations
 │   └── datasources/     # Remote data sources
 ├── domain/
@@ -71,6 +71,11 @@ The app uses ExchangeRate-API with two main endpoints:
 2. **Convert Currency**: `/v6/{API_KEY}/pair/{from}/{to}`
    * Gets real-time exchange rate between two currencies
 
-### Complied to he following requirements
+### Complied to the following requirements.
 
- **Flutter**: Latest version used **State Management**: Riverpod implemented **Architecture**: Clean Architecture + MVVM  **Code Quality**: DRY and KISS principles applied **API Integration**: ExchangeRate-API endpoints used  **Error Handling**: comprehensive and detailed error management 
+**Flutter**: Latest version used 
+**State Management**: Riverpod implemented 
+**Architecture**: Clean Architecture + MVVM 
+**Code Quality**: DRY and KISS principles applied 
+**API Integration**: ExchangeRate-API endpoints used  
+**Error Handling**: comprehensive and detailed error management 
