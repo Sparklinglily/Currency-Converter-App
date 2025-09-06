@@ -65,19 +65,19 @@ flutter run
 
 ### Screenshots
 
-![Image One](AppAssets/images/image1.jpg)
+![Image One](assets/images/image1.jpg)
 
-![Image Two](AppAssets/images/image2.jpg)
+![Image Two](assets/images/image2.jpg)
 
-![Image Three](AppAssets/images/image3.jpg)
+![Image Three](assets/images/image3.jpg)
 
-![Image Four](AppAssets/images/image5.jpg)
+![Image Four](assets/images/image5.jpg)
 
-![Image Five](AppAssets/images/image6.jpg)
+![Image Five](assets/images/image6.jpg)
 
-![Image Six](AppAssets/images/image9.jpg)
+![Image Six](assets/images/image9.jpg)
 
-![Image Seven](AppAssets/images/image10.jpg)
+![Image Seven](assets/images/image10.jpg)
 
 ### API Integration
 
