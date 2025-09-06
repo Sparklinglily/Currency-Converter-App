@@ -63,6 +63,22 @@ flutter pub get
 flutter run
 ```
 
+### Screenshots
+
+![Image One](AppAssets/images/image1.jpg)
+
+![Image Two](AppAssets/images/image2.jpg)
+
+![Image Three](AppAssets/images/image3.jpg)
+
+![Image Four](AppAssets/images/image5.jpg)
+
+![Image Five](AppAssets/images/image6.jpg)
+
+![Image Six](AppAssets/images/image9.jpg)
+
+![Image Seven](AppAssets/images/image10.jpg)
+
 ### API Integration
 
 The app uses ExchangeRate-API with two main endpoints:
@@ -73,9 +89,9 @@ The app uses ExchangeRate-API with two main endpoints:
 
 ### Complied to the following requirements.
 
-**Flutter**: Latest version used 
-**State Management**: Riverpod implemented 
-**Architecture**: Clean Architecture + MVVM 
-**Code Quality**: DRY and KISS principles applied 
-**API Integration**: ExchangeRate-API endpoints used  
-**Error Handling**: comprehensive and detailed error management 
+- **Flutter**: Latest version used 
+- **State Management**: Riverpod implemented 
+- **Architecture**: Clean Architecture + MVVM 
+- **Code Quality**: DRY and KISS principles applied 
+- **API Integration**: ExchangeRate-API endpoints used  
+- **Error Handling**: comprehensive and detailed error management 
