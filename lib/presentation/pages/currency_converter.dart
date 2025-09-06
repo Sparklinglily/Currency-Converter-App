@@ -345,6 +345,14 @@ class _CurrencyConverterPageState extends ConsumerState<CurrencyConverterPage> {
                     color: AppColors.whiteColor,
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(width: 1, color: AppColors.borderColor),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.greyColor.withOpacity(0.1),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
