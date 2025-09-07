@@ -21,6 +21,7 @@ A clean and simple currency converter app built with Flutter, following Clean Ar
 
 ## Project Structure
 
+```
 lib/
 ├── main.dart
 ├── core/
@@ -40,6 +41,7 @@ lib/
     ├── widgets/         # Reusable components
     ├── viewmodels/      # State management
     └── providers/       # Riverpod providers
+```
 
 ## Getting Started
 
