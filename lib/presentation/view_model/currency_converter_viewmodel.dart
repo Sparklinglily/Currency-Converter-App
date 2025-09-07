@@ -13,6 +13,7 @@ class CurrencyConverterState {
   final bool isLoading;
   final String? errorMessage;
   final ExchangeRate? currentRate;
+  final Map<String, ExchangeRate> cachedRates;
 
   const CurrencyConverterState({
     this.currencies = const [],
@@ -23,6 +24,7 @@ class CurrencyConverterState {
     this.isLoading = false,
     this.errorMessage,
     this.currentRate,
+    this.cachedRates = const {},
   });
 
   CurrencyConverterState copyWith({
@@ -34,6 +36,7 @@ class CurrencyConverterState {
     bool? isLoading,
     String? errorMessage,
     ExchangeRate? currentRate,
+    Map<String, ExchangeRate>? cachedRates,
   }) {
     return CurrencyConverterState(
       currencies: currencies ?? this.currencies,
@@ -44,6 +47,7 @@ class CurrencyConverterState {
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage,
       currentRate: currentRate ?? this.currentRate,
+      cachedRates: cachedRates ?? this.cachedRates,
     );
   }
 }
@@ -81,7 +85,7 @@ class CurrencyConverterViewModel extends StateNotifier<CurrencyConverterState> {
         isLoading: false,
       );
 
-      convert();
+      await _fetchExchangeRate();
     } else {
       state = state.copyWith(
         isLoading: false,
@@ -92,17 +96,17 @@ class CurrencyConverterViewModel extends StateNotifier<CurrencyConverterState> {
 
   void setFromCurrency(Currency currency) {
     state = state.copyWith(fromCurrency: currency);
-    convert();
+    _fetchExchangeRate();
   }
 
   void setToCurrency(Currency currency) {
     state = state.copyWith(toCurrency: currency);
-    convert();
+    _fetchExchangeRate();
   }
 
   void setAmount(double amount) {
     state = state.copyWith(amount: amount);
-    convert();
+    _calculateConversion();
   }
 
   void swapCurrencies() {
@@ -111,32 +115,73 @@ class CurrencyConverterViewModel extends StateNotifier<CurrencyConverterState> {
 
     if (from != null && to != null) {
       state = state.copyWith(fromCurrency: to, toCurrency: from);
-      convert();
+      _fetchExchangeRate();
     }
   }
 
-  Future<void> convert() async {
+  void _calculateConversion() {
+    final rate = state.currentRate;
+    if (rate != null) {
+      final converted = rate.convert(state.amount);
+      state = state.copyWith(convertedAmount: converted);
+    }
+  }
+
+  Future<void> _fetchExchangeRate() async {
     final from = state.fromCurrency;
     final to = state.toCurrency;
 
-    if (from == null || to == null || from.code == to.code) return;
+    if (from == null || to == null) return;
+
+    if (from.code == to.code) {
+      final sameRate = ExchangeRate(
+        baseCode: from.code,
+        targetCode: to.code,
+        rate: 1.0,
+        lastUpdate: DateTime.now(),
+      );
+
+      state = state.copyWith(
+        currentRate: sameRate,
+        convertedAmount: state.amount,
+      );
+      return;
+    }
+    final cacheKey = '${from.code}-${to.code}';
+    final cachedRate = state.cachedRates[cacheKey];
+
+    if (cachedRate != null &&
+        DateTime.now().difference(cachedRate.lastUpdate).inMinutes < 5) {
+      state = state.copyWith(currentRate: cachedRate);
+      _calculateConversion();
+      return;
+    }
 
     state = state.copyWith(isLoading: true, errorMessage: null);
 
     final (exchangeRate, failure) = await convertCurrency(from.code, to.code);
 
     if (exchangeRate != null) {
-      final converted = exchangeRate.convert(state.amount);
+      final newCache = Map<String, ExchangeRate>.from(state.cachedRates);
+      newCache[cacheKey] = exchangeRate;
+
       state = state.copyWith(
-        convertedAmount: converted,
         currentRate: exchangeRate,
+        cachedRates: newCache,
         isLoading: false,
       );
+
+      _calculateConversion();
     } else {
       state = state.copyWith(
         isLoading: false,
-        errorMessage: failure?.message ?? 'Failed to convert currency',
+        errorMessage: failure?.message ?? 'Failed to get exchange rate',
       );
     }
+  }
+
+  Future<void> refreshRates() async {
+    state = state.copyWith(cachedRates: {});
+    await _fetchExchangeRate();
   }
 }

@@ -31,7 +31,7 @@ lib/
 ├── data/
 │   ├── models/          # Data models
 │   ├── repositories/    # Repository implementations
-│   └── datasources/     # Remote data sources
+│   └── apiservice/      # api calls
 ├── domain/
 │   ├── entities/        # Business objects
 │   ├── repositories/    # Repository contracts

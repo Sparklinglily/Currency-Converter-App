@@ -13,7 +13,7 @@ class CurrencyRepositoryImpl implements CurrencyRepository {
   Future<(List<Currency>?, Failure?)> getCurrencies() async {
     try {
       final currencyModels = await apiService.getCurrencies();
-      //converting currency model to Currency, an important fix to avoid type mismatch issue
+      //converting currency model to Currency via mapping, an important fix to avoid type mismatch issue
       final currencies =
           currencyModels
               .map((model) => Currency(code: model.code, name: model.name))
